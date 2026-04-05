@@ -1,3 +1,2 @@
-const name: string = 'Long'
-console.log(name)
-
+import * as http from 'http';
+const server = http.createServer()
