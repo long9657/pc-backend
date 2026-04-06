@@ -11,4 +11,5 @@ app.listen(3000, () => {
   console.log('dang nghe')
 })
 
-database.connect().catch(console.dir)
+database.connect()
+// console.log(database.user())

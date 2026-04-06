@@ -1,5 +1,6 @@
-import { Db, MongoClient, ServerApiVersion } from 'mongodb'
+import { Collection, Db, MongoClient, ServerApiVersion } from 'mongodb'
 import { config } from 'dotenv'
+import User from '~/models/schemas/user.schemas'
 config()
 const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@pc.bagchof.mongodb.net/?appName=PC`
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -9,7 +10,7 @@ class Database {
   private client: MongoClient
   constructor() {
     this.client = new MongoClient(uri)
-    this.db = this.client.db('admin')
+    this.db = this.client.db(process.env.DB_NAME)
   }
   async connect() {
     try {
@@ -20,8 +21,11 @@ class Database {
       console.log('Pinged your deployment. You successfully connected to MongoDB!')
     } finally {
       // Ensures that the client will close when you finish/error
-      await this.client.close()
+      // await this.client.close()
     }
+  }
+  get users(): Collection<User> {
+    return this.db.collection(process.env.DB_USER_COLLECTIONS as string)
   }
 }
 
